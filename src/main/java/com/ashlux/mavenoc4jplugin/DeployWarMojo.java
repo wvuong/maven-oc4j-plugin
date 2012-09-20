@@ -35,11 +35,27 @@ public class DeployWarMojo extends AbstractOc4jMojo {
    */
   private String contextRoot;
 
+  /**
+   * Bind all web apps.
+   *
+   * @parameter expression="${oc4j.bindAllWebApps}"
+   */
+  private boolean bindAllWebApps = true;
+
+  /**
+   * Parent.
+   *
+   * @parameter expression="${oc4j.parent}"
+   */
+  private String parent = "default";
+
   protected String buildCommand() {
     String command = getJavaHome() + "/bin/java -jar " + getJ2eeHome() + "/" + getAdminJar() + " " +
         getConnectionUri() + " " + getUsername() + " " + getPassword() + " -deploy " +
         "-file " + warDirectory + "/" + warFile + " " +
-        "-deploymentName " + applicationName + " -contextRoot " + contextRoot;
+        "-deploymentName " + applicationName + " -contextRoot " + contextRoot +
+        (isBindAllWebApps() ? " -bindAllWebApps" : "") +
+        " -parent " + getParent();
     getLog().debug("Going to run command [" + command + "].");
     return command;
   }
@@ -74,5 +90,21 @@ public class DeployWarMojo extends AbstractOc4jMojo {
 
   public String getContextRoot() {
     return contextRoot;
+  }
+
+  public void setBindAllWebApps(boolean bindAllWebApps) {
+	this.bindAllWebApps = bindAllWebApps;
+  }
+
+  public boolean isBindAllWebApps() {
+	return bindAllWebApps;
+  }
+
+  public void setParent(String parent) {
+	this.parent = parent;
+  }
+
+  public String getParent() {
+	return parent;
   }
 }

@@ -21,7 +21,7 @@ public class DeployWarMojoTest {
     String command = deployWarMojo.buildCommand();
 
     assertEquals(command,
-        "javaHome/bin/java -jar j2eeHome/adminJar connectionUri username password -deploy -file warDirectory/warFile -deploymentName applicationName -contextRoot contextRoot");
+        "javaHome/bin/java -jar j2eeHome/adminJar connectionUri username password -deploy -file warDirectory/warFile -deploymentName applicationName -contextRoot contextRoot -bindAllWebApps -parent default");
   }
 
 }
